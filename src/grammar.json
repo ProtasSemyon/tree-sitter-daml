@@ -12811,6 +12811,18 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_phantom_template"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "template"
         },
@@ -12828,6 +12840,18 @@
             {
               "type": "SEQ",
               "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_phantom_with"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
                 {
                   "type": "STRING",
                   "value": "with"
@@ -13177,6 +13201,18 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_phantom_signatory"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "signatory"
         },
@@ -13189,6 +13225,18 @@
     "observer": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_phantom_observer"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "STRING",
           "value": "observer"
@@ -13203,6 +13251,18 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_phantom_ensure"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "ensure"
         },
@@ -13216,6 +13276,18 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_phantom_agreement"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "agreement"
         },
@@ -13228,6 +13300,18 @@
     "key": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_phantom_key"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "STRING",
           "value": "key"
@@ -13258,8 +13342,33 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "choice"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_phantom_choice"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "STRING",
+                  "value": "choice"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "FIELD",
@@ -13275,6 +13384,18 @@
             {
               "type": "SEQ",
               "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_phantom_with"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
                 {
                   "type": "STRING",
                   "value": "with"
@@ -13344,6 +13465,18 @@
     "daml_scenario": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_phantom_scenario"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "STRING",
           "value": "scenario"
@@ -13636,6 +13769,42 @@
     {
       "type": "SYMBOL",
       "name": "_phantom_deriving"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_with"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_template"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_scenario"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_choice"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_signatory"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_observer"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_ensure"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_agreement"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_phantom_key"
     },
     {
       "type": "SYMBOL",
