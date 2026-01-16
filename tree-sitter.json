@@ -1,0 +1,42 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "daml",
+      "camelcase": "Daml",
+      "title": "Daml",
+      "scope": "source.daml",
+      "file-types": [
+        "daml"
+      ],
+      "injection-regex": "^daml$",
+      "class-name": "TreeSitterDaml"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Digital Asset Modeling Language",
+    "authors": [
+      {
+        "name": "Semyon Protas",
+        "email": "semyon.protas@gmail.com",
+        "url": ""
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/ProtasSemyon/tree-sitter-daml",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "java": false,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
