@@ -5,9 +5,10 @@ const {
 
 module.exports = {
   template: $ => seq(
+    optional($._phantom_template),
     'template',
     field('head', $._type_head),
-    optional(seq('with', field('payload', $.daml_fields))),
+    optional(seq(optional($._phantom_with), 'with', field('payload', $.daml_fields))),
     'where',
     field('body', $.template_body)
   ),
@@ -26,12 +27,25 @@ module.exports = {
     $.choice
   ),
 
-  signatory: $ => seq('signatory', $._exp),
-  observer: $ => seq('observer', $._exp),
-  ensure: $ => seq('ensure', $._exp),
-  agreement: $ => seq('agreement', $._exp),
+  signatory: $ => seq(
+    optional($._phantom_signatory),
+    'signatory', $._exp
+  ),
+  observer: $ => seq(
+    optional($._phantom_observer),
+    'observer', $._exp
+  ),
+  ensure: $ => seq(
+    optional($._phantom_ensure),
+    'ensure', $._exp
+  ),
+  agreement: $ => seq(
+    optional($._phantom_agreement),
+    'agreement', $._exp
+  ),
 
   key: $ => seq(
+    optional($._phantom_key),
     'key',
     $.type,
     'for',
@@ -41,9 +55,9 @@ module.exports = {
   ),
 
   choice: $ => seq(
-    'choice',
+    optional(seq(optional($._phantom_choice), 'choice')), // Correctly placing _phantom_choice
     field('name', $._constructor),
-    optional(seq('with', field('argument_fields', $.daml_fields))),
+    optional(seq(optional($._phantom_with), 'with', field('argument_fields', $.daml_fields))),
     optional(seq(':', field('return_type', $.quantified_type))),
     'controller',
     $._exp,
@@ -52,6 +66,7 @@ module.exports = {
   ),
 
   daml_scenario: $ => seq(
+    optional($._phantom_scenario),
     'scenario',
     field('body', $._exp)
   ),

@@ -95,15 +95,15 @@ module.exports = {
     $._phantom_deriving,
 
     // // DAML
-    // $._phantom_with,
-    // $._phantom_template,
-    // $._phantom_scenario,
-    // $._phantom_choice,
-    // $._phantom_signatory,
-    // $._phantom_observer,
-    // $._phantom_ensure,
-    // $._phantom_agreement,
-    // $._phantom_key,
+    $._phantom_with,
+    $._phantom_template,
+    $._phantom_scenario,
+    $._phantom_choice,
+    $._phantom_signatory,
+    $._phantom_observer,
+    $._phantom_ensure,
+    $._phantom_agreement,
+    $._phantom_key,
 
 
     // Detect and emit text nodes for comments and CPP.
