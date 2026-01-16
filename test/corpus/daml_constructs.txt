@@ -1,0 +1,6 @@
+template MyTemplate
+  with
+    owner: Party
+  where
+    signatory owner
+

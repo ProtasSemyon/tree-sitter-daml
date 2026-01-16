@@ -21,12 +21,12 @@
       {
         "name": "Semyon Protas",
         "email": "semyon.protas@gmail.com",
-        "url": ""
+        "url": "https://github.com/ProtasSemyon"
       }
     ],
     "links": {
       "repository": "https://github.com/ProtasSemyon/tree-sitter-daml",
-      "funding": ""
+      "funding": "https://github.com/ProtasSemyon"
     }
   },
   "bindings": {

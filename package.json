@@ -2,7 +2,7 @@
   "name": "tree-sitter-daml",
   "version": "0.1.0",
   "description": "Digital Asset Modeling Language",
-  "type": "module",
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/protassemyon/tree-sitter-daml.git"
@@ -24,6 +24,7 @@
   ],
   "files": [
     "grammar.js",
+    "grammar/*.js"
     "tree-sitter.json",
     "binding.gyp",
     "prebuilds/**",

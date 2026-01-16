@@ -22,7 +22,7 @@ OBJS := $(patsubst %.c,%.o,$(PARSER) $(EXTRAS))
 
 # flags
 ARFLAGS ?= rcs
-override CFLAGS += -I$(SRC_DIR) -std=c11 -fPIC
+override CFLAGS += -I$(SRC_DIR) -std=c11 -fPIC -DTREE_SITTER_DEBUG
 
 # ABI versioning
 SONAME_MAJOR = $(shell sed -n 's/\#define LANGUAGE_VERSION //p' $(PARSER))
@@ -73,7 +73,7 @@ $(LANGUAGE_NAME).pc: bindings/c/$(LANGUAGE_NAME).pc.in
 		-e 's|@CMAKE_INSTALL_PREFIX@|$(PREFIX)|' $< > $@
 
 $(SRC_DIR)/grammar.json: grammar.js
-	$(TS) generate --no-parser $^
+	$(TS) generate $^
 
 $(PARSER): $(SRC_DIR)/grammar.json
 	$(TS) generate $^
