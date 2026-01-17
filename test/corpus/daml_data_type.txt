@@ -1,0 +1,1 @@
+data MyData = MyConstructor1 Int Text | MyConstructor2 with field1: Bool, field2: Party

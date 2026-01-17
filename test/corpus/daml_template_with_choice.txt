@@ -1,0 +1,16 @@
+template MyComplexTemplate
+  with
+    party1: Party
+    party2: Party
+  where
+    signatory party1
+    observer party2
+    choice MyChoice: ()
+      with
+        arg1: Text
+        arg2: Int
+      controller party1
+      do
+        debug "Executing MyChoice"
+        pure ()
+

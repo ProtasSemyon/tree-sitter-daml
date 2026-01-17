@@ -1,0 +1,10 @@
+data Type = Type with
+  var: Int
+
+myFunction :: Int -> Text -> Update (Party)
+myFunction x y =
+  let
+    myLocalVar = x + 1
+  in
+    debug (show myLocalVar)
+    y <> " " <$> (show x)

@@ -24,7 +24,7 @@
   ],
   "files": [
     "grammar.js",
-    "grammar/*.js"
+    "grammar/*.js",
     "tree-sitter.json",
     "binding.gyp",
     "prebuilds/**",
@@ -54,6 +54,7 @@
     "install": "node-gyp-build",
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
-    "test": "node --test bindings/node/*_test.js"
+    "test": "node --test bindings/node/*_test.js",
+    "test:corpus": "tree-sitter test"
   }
 }

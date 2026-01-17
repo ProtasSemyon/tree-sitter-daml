@@ -1259,6 +1259,24 @@
           }
         ]
       },
+      "arguments": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "explicit_type",
+            "named": true
+          },
+          {
+            "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "type_binder",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": true,
         "required": false,
@@ -5274,6 +5292,10 @@
         "multiple": false,
         "required": false,
         "types": [
+          {
+            "type": "daml_fields",
+            "named": true
+          },
           {
             "type": "fields",
             "named": true

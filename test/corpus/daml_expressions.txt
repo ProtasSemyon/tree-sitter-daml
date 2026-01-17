@@ -1,0 +1,9 @@
+myExpression =
+  if True then
+    do
+      debug "It's true!"
+      1
+  else
+    case someValue of
+      "hello" -> 2
+      _ -> 3

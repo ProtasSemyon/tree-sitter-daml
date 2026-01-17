@@ -57,7 +57,10 @@ module.exports = {
   choice: $ => seq(
     optional(seq(optional($._phantom_choice), 'choice')), // Correctly placing _phantom_choice
     field('name', $._constructor),
-    optional(seq(optional($._phantom_with), 'with', field('argument_fields', $.daml_fields))),
+    choice(
+      optional(seq(optional($._phantom_with), 'with', field('argument_fields', $.daml_fields))),
+      field('arguments', repeat(prec('patterns', $._pat_apply_arg)))
+    ),
     optional(seq(':', field('return_type', $.quantified_type))),
     'controller',
     $._exp,
