@@ -5,10 +5,9 @@ const {
 
 module.exports = {
   template: $ => seq(
-    optional($._phantom_template),
     'template',
     field('head', $._type_head),
-    optional(seq(optional($._phantom_with), 'with', field('payload', $.daml_fields))),
+    optional(seq('with', field('payload', $.daml_fields))),
     'where',
     field('body', $.template_body)
   ),
@@ -23,54 +22,53 @@ module.exports = {
     $.observer,
     $.ensure,
     $.agreement,
-    $.key,
     $.choice
   ),
 
+  choice: $ => seq(
+    optional(choice('nonconsuming', 'preconsuming', 'postconsuming')),
+    'choice',
+    field('name', $._constructor),
+    ':',
+    field('return_type', $.quantified_type),
+    optional(seq('with', field('arguments', $.daml_fields))),
+    $.controller,
+    optional($.observer),
+    field('body', $._exp_do)
+  ),
+
   signatory: $ => seq(
-    optional($._phantom_signatory),
-    'signatory', $._exp
+    'signatory', sep1(',', $.expression)
   ),
   observer: $ => seq(
-    optional($._phantom_observer),
-    'observer', $._exp
+    'observer', sep1(',', $.expression)
+  ),
+  controller: $ => seq(
+    'controller', sep1(',', $.expression)
   ),
   ensure: $ => seq(
-    optional($._phantom_ensure),
     'ensure', $._exp
   ),
   agreement: $ => seq(
-    optional($._phantom_agreement),
     'agreement', $._exp
   ),
 
-  key: $ => seq(
-    optional($._phantom_key),
-    'key',
-    $.type,
-    'for',
-    $._exp,
-    'maintains',
-    $._exp
-  ),
-
-  choice: $ => seq(
-    optional(seq(optional($._phantom_choice), 'choice')), // Correctly placing _phantom_choice
-    field('name', $._constructor),
-    choice(
-      optional(seq(optional($._phantom_with), 'with', field('argument_fields', $.daml_fields))),
-      field('arguments', repeat(prec('patterns', $._pat_apply_arg)))
-    ),
-    optional(seq(':', field('return_type', $.quantified_type))),
-    'controller',
-    $._exp,
-    'do',
-    field('body', $._statements)
-  ),
-
   daml_scenario: $ => seq(
-    optional($._phantom_scenario),
     'scenario',
     field('body', $._exp)
+  ),
+
+  _exp_with: $ => prec.left('apply', seq(
+    $.expression,
+    'with',
+    $.with_fields
+  )),
+
+  with_fields: $ => layout($, $.with_field),
+
+  with_field: $ => choice(
+    seq($.variable, '=', $._exp),
+    alias($.variable, $.punned_field),
+    alias('..', $.wildcard)
   ),
 };

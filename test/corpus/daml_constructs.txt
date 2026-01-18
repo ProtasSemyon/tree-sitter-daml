@@ -1,6 +1,3 @@
-data Test = Test with
-  info : Decimal
-
 template MyTemplate
   with
     owner: Party

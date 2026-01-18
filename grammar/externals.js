@@ -94,18 +94,6 @@ module.exports = {
     $._phantom_bar,
     $._phantom_deriving,
 
-    // // DAML
-    $._phantom_with,
-    $._phantom_template,
-    $._phantom_scenario,
-    $._phantom_choice,
-    $._phantom_signatory,
-    $._phantom_observer,
-    $._phantom_ensure,
-    $._phantom_agreement,
-    $._phantom_key,
-
-
     // Detect and emit text nodes for comments and CPP.
     // In particular, #else branches of CPP conditionals a fully contained in the resulting node, since their nonlinear
     // nature means they cannot be parsed.

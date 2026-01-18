@@ -133,15 +133,6 @@ typedef enum {
   ARROW,
   BAR,
   DERIVING,
-  WITH,
-  TEMPLATE,
-  SCENARIO,
-  CHOICE,
-  SIGNATORY,
-  OBSERVER,
-  ENSURE,
-  AGREEMENT,
-  KEY,
   COMMENT,
   HADDOCK,
   CPP,
@@ -196,15 +187,6 @@ static const char *sym_names[] = {
   "arrow",
   "bar",
   "deriving",
-  "with",
-  "template",
-  "scenario",
-  "choice",
-  "signatory",
-  "observer",
-  "ensure",
-  "agreement",
-  "key",
   "comment",
   "haddock",
   "cpp",
@@ -331,15 +313,6 @@ typedef enum {
   LThen,
   LElse,
   LDeriving,
-  LAgreement,
-  LChoice,
-  LEnsure,
-  LKey,
-  LObserver,
-  LScenario,
-  LSignatory,
-  LTemplate,
-  LWith,
   LModule,
   LUpper,
   LTick,
@@ -382,15 +355,6 @@ static const char *token_names[] = {
   "then",
   "else",
   "deriving",
-  "agreement",
-  "choice",
-  "ensure",
-  "key",
-  "observer",
-  "scenario",
-  "signatory",
-  "template",
-  "with",
   "module",
   "upper",
   "tick",
@@ -2015,51 +1979,6 @@ static Symbol end_layout_deriving(Env *env) {
   return FAIL;
 }
 
-static Symbol end_layout_template(Env *env) {
-  if (valid(env, END) && !valid(env, TEMPLATE) && is_layout_context(env)) return end_layout(env, "template");
-  return FAIL;
-}
-
-static Symbol end_layout_scenario(Env *env) {
-  if (valid(env, END) && !valid(env, SCENARIO) && is_layout_context(env)) return end_layout(env, "scenario");
-  return FAIL;
-}
-
-static Symbol end_layout_choice(Env *env) {
-  if (valid(env, END) && !valid(env, CHOICE) && is_layout_context(env)) return end_layout(env, "choice");
-  return FAIL;
-}
-
-static Symbol end_layout_signatory(Env *env) {
-  if (valid(env, END) && !valid(env, SIGNATORY) && is_layout_context(env)) return end_layout(env, "signatory");
-  return FAIL;
-}
-
-static Symbol end_layout_observer(Env *env) {
-  if (valid(env, END) && !valid(env, OBSERVER) && is_layout_context(env)) return end_layout(env, "observer");
-  return FAIL;
-}
-
-static Symbol end_layout_ensure(Env *env) {
-  if (valid(env, END) && !valid(env, ENSURE) && is_layout_context(env)) return end_layout(env, "ensure");
-  return FAIL;
-}
-
-static Symbol end_layout_agreement(Env *env) {
-  if (valid(env, END) && !valid(env, AGREEMENT) && is_layout_context(env)) return end_layout(env, "agreement");
-  return FAIL;
-}
-
-static Symbol end_layout_key(Env *env) {
-  if (valid(env, END) && !valid(env, KEY) && is_layout_context(env)) return end_layout(env, "key");
-  return FAIL;
-}
-
-static Symbol end_layout_with(Env *env) {
-  if (valid(env, END) && !valid(env, WITH) && is_layout_context(env)) return end_layout(env, "with");
-  return FAIL;
-}
-
 /**
  * Return `true` if there is a `TExp` context on the stack and only layouts above it.
  */
@@ -2469,38 +2388,16 @@ static Lexed lex(Env *env, bool bol) {
   SEQ(lex_extras(env, bol));
   if (symop_char(peek0(env))) SEQ(lex_symop(env));
   else switch (peek0(env)) {
-    case 'a': // For agreement
-      if (token(env, "agreement")) return LAgreement;
-      break;
-    case 'c': // For choice
-      if (token(env, "choice")) return LChoice;
-      break;
-    case 'w': // For with and where
-      if (token(env, "with")) return LWith;
-      if (token(env, "where")) return LWhere;
-      break;
-    case 'i': // For in
+    case 'w':
+      return try_end_token(env, "where", LWhere);
+    case 'i':
       return try_end_token(env, "in", LIn);
-    case 't': // For template and then
-      if (token(env, "template")) return LTemplate;
-      if (token(env, "then")) return LThen;
-      break;
-    case 'e': // For ensure and else
-      if (token(env, "ensure")) return LEnsure;
-      if (token(env, "else")) return LElse;
-      break;
-    case 'd': // For deriving
+    case 't':
+      return try_end_token(env, "then", LThen);
+    case 'e':
+      return try_end_token(env, "else", LElse);
+    case 'd':
       return try_end_token(env, "deriving", LDeriving);
-    case 'k': // For key
-      if (token(env, "key")) return LKey;
-      break;
-    case 'o': // For observer
-      if (token(env, "observer")) return LObserver;
-      break;
-    case 's': // For signatory and scenario
-      if (token(env, "signatory")) return LSignatory;
-      if (token(env, "scenario")) return LScenario;
-      break;
     case 'm':
       if ((uninitialized(env) || in_module_header(env)) && token(env, "module")) return LModule;
       break;
@@ -2822,26 +2719,6 @@ static Symbol process_token_safe(Env *env, Lexed next) {
       return end_layout(env, "then/else");
     case LDeriving:
       return end_layout_deriving(env);
-
-    case LTemplate:
-      return end_layout_template(env);
-    case LScenario:
-      return end_layout_scenario(env);
-    case LChoice:
-      return end_layout_choice(env);
-    case LSignatory:
-      return end_layout_signatory(env);
-    case LObserver:
-      return end_layout_observer(env);
-    case LEnsure:
-      return end_layout_ensure(env);
-    case LAgreement:
-      return end_layout_agreement(env);
-    case LKey:
-      return end_layout_key(env);
-    case LWith:
-      return end_layout_with(env);
-
     case LBar:
       if (!valid(env, BAR)) return end_layout(env, "bar");
       break;

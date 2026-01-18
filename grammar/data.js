@@ -113,7 +113,6 @@ module.exports = {
     choice(
       field('fields', alias($._record_fields, $.fields)),
       seq(
-        optional($._phantom_with),
         'with',
         field('fields', $.daml_fields)
       )

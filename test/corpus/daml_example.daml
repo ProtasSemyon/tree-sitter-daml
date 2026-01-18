@@ -1,0 +1,61 @@
+module Splice.Amulet where
+
+import Prelude
+import DA.Action (void)
+import DA.Assert
+import DA.Map as Map
+import DA.TextMap as TextMap
+import DA.Optional (fromOptional)
+
+import Splice.Api.Token.MetadataV1 qualified as Api.Token.MetadataV1
+import Splice.Api.Token.HoldingV1 qualified as Api.Token.HoldingV1
+
+import Splice.Amulet.TokenApiUtils
+import Splice.Expiry
+import Splice.Fees
+import qualified Splice.Api.FeaturedAppRightV1
+import Splice.Round
+import Splice.Types
+
+import Splice.Util
+
+data FeaturedAppRight_CancelResult = FeaturedAppRight_CancelResult
+  with
+    user : Party
+    user2 : Party
+
+template ExternalPartyAmuletRules
+  with
+    dso : Party
+  where
+    signatory dso
+
+    -- This choice is not guarded by any resource consumption other than the traffic required to pay for the submission of the exercising of this choice.
+    -- If this is being abused the DSO party can blacklist (or rate limit) the submitting participant node.
+    nonconsuming choice ExternalPartyAmuletRules_CreateTransferCommand : ExternalPartyAmuletRules_CreateTransferCommandResult
+      with
+        sender : Party
+        receiver : Party
+        delegate : Party
+        amount : Decimal
+        expiresAt : Time
+        nonce : Int
+        description : Optional Text
+        expectedDso : Optional Party
+        -- Party that the sender expects to represent the DSO party of the ExternalAmuletRules contract they are calling.
+        -- Must always be set to protect from malicious delegees swapping the ExternalAmuletRules contract out for
+        -- one under their control.
+      controller sender
+      dowhere
+         checkExpectedDso dso expectedDso
+         assertWithinDeadline "ExternalPartyAmuletRules_CreateTransferCommand.expiresAt" expiresAt
+         cmd <- create TransferCommand with
+           dso
+           sender
+           receiver
+           delegate
+           amount
+           expiresAt
+           nonce
+           description
+         pure (ExternalPartyAmuletRules_CreateTransferCommandResult cmd)
