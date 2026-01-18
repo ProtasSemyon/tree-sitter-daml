@@ -89,7 +89,7 @@
   "=>"
   "->"
   "<-"
-  "\"
+  "\\"
   "`"
   "@"
 ] @operator
@@ -121,7 +121,6 @@
   "stock"
   "anyclass"
   "do"
-  "mdo"
   "rec"
   "infix"
   "infixl"
@@ -138,7 +137,6 @@
   "ensure"
   "agreement"
   "scenario"
-  "create"
 ] @keyword
 
 ; ----------------------------------------------------------------------------
@@ -154,11 +152,6 @@
 
 (decl/bind
   name: (variable) @variable)
-
-; Highlight template names as type definitions
-(template
-  head: (_type_head
-    name: (name) @type.definition))
 
 ; Highlight choice names as methods
 (choice
@@ -269,7 +262,7 @@
   ]
   . 
   (operator) @_op
-  (#any-of? @_op "$" "<$"" ">>=" "=<<"))
+  (#any-of? @_op "$" "<$" ">>=" "=<<"))
 
 ; right hand side of infix operator
 ((infix
@@ -285,7 +278,7 @@
   ])
   . 
   (operator) @_op
-  (#any-of? @_op "$" "<$"" "=<<"))
+  (#any-of? @_op "$" "<$" "=<<"))
 
 ; decl/function composition, arrows, monadic composition (lhs)
 (
