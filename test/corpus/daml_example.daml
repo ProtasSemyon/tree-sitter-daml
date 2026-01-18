@@ -46,16 +46,6 @@ template ExternalPartyAmuletRules
         -- Must always be set to protect from malicious delegees swapping the ExternalAmuletRules contract out for
         -- one under their control.
       controller sender
-      dowhere
+      do
          checkExpectedDso dso expectedDso
-         assertWithinDeadline "ExternalPartyAmuletRules_CreateTransferCommand.expiresAt" expiresAt
-         cmd <- create TransferCommand with
-           dso
-           sender
-           receiver
-           delegate
-           amount
-           expiresAt
-           nonce
-           description
          pure (ExternalPartyAmuletRules_CreateTransferCommandResult cmd)
