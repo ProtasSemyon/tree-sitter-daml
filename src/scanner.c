@@ -3432,23 +3432,29 @@ unsigned tree_sitter_daml_external_scanner_serialize(void *payload, char *buffer
 }
 
 void tree_sitter_daml_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
-  State *state = (State *) payload;
-  
-  // Basic state initialization (no-op for deserialization)
-  state->contexts.size = 0;
-  state->lookahead.size = 0;
-  state->lookahead.offset = 0;
-  array_reserve(&state->lookahead, 8); // Ensure capacity is reserved
-  
-  state->newline.state = NResume; 
-  state->newline.indent = 0;
-  state->newline.end = LNothing;
-  state->newline.eof = false;
-  state->newline.no_semi = false;
-  state->newline.skip_semi = false;
-  state->newline.unsafe = false;
-
-  // No deserialization logic here for now
+    State *state = (State *) payload;
+      Persist p;
+      Persist *persist;
+      if (length > 0)
+        persist = (Persist *) buffer;
+      else {
+        p = (Persist) {.contexts = 0};
+        persist = &p;
+        persist->newline.state = NResume;
+      }
+      unsigned contexts_size = persist->contexts * sizeof(Context);
+      state->newline = persist->newline;
+      array_reserve(&state->contexts, persist->contexts);
+      state->contexts.size = persist->contexts;
+      if (length > 0)
+        memcpy(state->contexts.contents, buffer + sizeof(Persist), contexts_size);
+      state->lookahead.size = 0;
+      state->lookahead.offset = 0;
+      array_reserve(&state->lookahead, 8);
+    #ifdef TREE_SITTER_DEBUG
+      if (length > 0)
+        deserialize_parse_lines(buffer + sizeof(Persist) + contexts_size, &state->parse, persist->parse);
+    #endif
 }
 
 void tree_sitter_daml_external_scanner_destroy(void *payload) {
